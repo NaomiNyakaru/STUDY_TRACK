@@ -8,7 +8,7 @@ class Login extends StatelessWidget {
   TextEditingController nameInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
   
-  //declaring objects of a controller class
+  
   Logincontroller logincontroller = Get.put(Logincontroller());
   
   @override
@@ -96,12 +96,7 @@ class Login extends StatelessWidget {
                           onPressed: () {
                             logincontroller.username.value = nameInput.text;
                             logincontroller.password.value = passwordInput.text;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterScreen(),
-                              ),
-                            );
+                            Get.toNamed('/register');
                           },
                           child: const Text(
                             'Don\'t have an account? Register',

@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+List<BottomNavigationBarItem> myMenus = [
+  BottomNavigationBarItem(icon: Icon(Icons.home), label:"Home"),
+  BottomNavigationBarItem(icon: Icon(Icons.list), label:"Assignments"),
+  BottomNavigationBarItem(icon: Icon(Icons.settings), label:"Settings"),
+];
+
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
 
@@ -11,6 +17,7 @@ class Dashboard extends StatelessWidget {
         backgroundColor: Colors.lightBlueAccent,
         centerTitle: false,
       ),
+      bottomNavigationBar: BottomNavigationBar(items: myMenus),
       body: const Center(
         child: Text('Welcome to the dashboard'),
       ),

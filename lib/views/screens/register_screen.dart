@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(40.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(children: [
           myTextField(controller: fnameInput, icon:Icons.person, hint: 'Enter first name'),
           SizedBox(

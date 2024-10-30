@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:study_track/configs/routes.dart';  // Import your routes file
+import 'package:study_track/configs/routes.dart'; 
 import 'package:study_track/views/screens/login_screen.dart';
 
 void main() {
@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
       getPages: routes,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-         
          body: Login(),
         ),
       );
