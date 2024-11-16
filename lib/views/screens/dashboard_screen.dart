@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:study_track/configs/colors.dart';
+import 'package:study_track/controllers/dashboardcontroller.dart';
 
-List<BottomNavigationBarItem> myMenus = [
-  BottomNavigationBarItem(icon: Icon(Icons.home), label:"Home"),
-  BottomNavigationBarItem(icon: Icon(Icons.list), label:"Assignments"),
-  BottomNavigationBarItem(icon: Icon(Icons.settings), label:"Settings"),
-];
-
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+   
+    final Dashboardcontroller controller = Get.put(Dashboardcontroller());
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        backgroundColor: Colors.lightBlueAccent,
-        centerTitle: false,
+      body: Obx(
+        () => controller.myScreens[controller.currentIndex.value],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: myMenus),
-      body: const Center(
-        child: Text('Welcome to the dashboard'),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          items: controller.myMenus,
+          selectedItemColor: Colors.blueAccent,
+          selectedLabelStyle: const TextStyle(
+            color: Color.fromARGB(255, 188, 145, 196),
+          ),
+          unselectedItemColor: Colors.black45,
+          showUnselectedLabels: true,
+          onTap: (index) => controller.changeTab(index),
+          currentIndex: controller.currentIndex.value,
+          unselectedLabelStyle: const TextStyle(color: Colors.green),
+        ),
       ),
     );
   }

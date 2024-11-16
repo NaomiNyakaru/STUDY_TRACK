@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:study_track/controllers/logincontroller.dart';
 import 'package:study_track/views/screens/register_screen.dart';
+import 'package:study_track/views/widgets/mysnackbar.dart';
 import 'package:study_track/views/widgets/mytextfield.dart';
 import 'package:get/get.dart';
 
 class Login extends StatelessWidget {
   TextEditingController nameInput = TextEditingController();
   TextEditingController passwordInput = TextEditingController();
-  
   
   Logincontroller logincontroller = Get.put(Logincontroller());
   
@@ -21,8 +21,7 @@ class Login extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const SizedBox(height: 50),
-                // Logo with padding
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: Image.asset(
@@ -35,8 +34,6 @@ class Login extends StatelessWidget {
                     },
                   ),
                 ),
-                
-                // Login form container
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -67,28 +64,140 @@ class Login extends StatelessWidget {
                           icon: Icons.key,
                           hint: "Enter your password"
                         ),
-                        const SizedBox(height: 30),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {
+                              Get.toNamed('/forgot-password');
+                            },
+                            child: const Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 0),
                         SizedBox(
                           width: double.infinity,
                           height: 45,
                           child: ElevatedButton(
                             onPressed: () {
+                              if (nameInput.text.isEmpty) {
+
+                                mysnackbar(
+                                  title: "Error",
+                                  message: "Name must be provided",
+                                  type: "error",
+                                );
+                                return;
+                              }
+                              
+                              if (passwordInput.text.isEmpty) {
+                                mysnackbar(
+                                  title: "Error",
+                                  message: "Password must be provided",
+                                  type: "error",
+                                );
+                                return;
+                              }
+
+                              if (passwordInput.text.length < 6) {  // Example minimum length
+                                mysnackbar(
+                                  title: "Error",
+                                  message: "Password must be at least 6 characters",
+                                  type: "error",
+                                );
+                                return;
+                              }
+
                               logincontroller.username.value = nameInput.text;
                               logincontroller.password.value = passwordInput.text;
                               Get.toNamed('/dashboard');
                             },
                             style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(Icons.login, color: Colors.blue),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        // Or divider
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                color: Colors.grey.shade600,
+                                thickness: 0.5,
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                'OR',
+                                style: TextStyle(
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Divider(
+                                color: Colors.grey.shade600,
+                                thickness: 0.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: OutlinedButton.icon(
+                            icon: Image.asset(
+                              'assets/images/google_icon.png',
+                              height: 24.0,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.g_mobiledata);
+                              },
+                            ),
+                            label: const Text(
+                              'Sign in with Google',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              side: const BorderSide(color: Colors.grey),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: () {
+                              // Google Sign In 
+                            },
                           ),
                         ),
                         const SizedBox(height: 15),
@@ -111,6 +220,6 @@ class Login extends StatelessWidget {
           ),
         ),
       ),
-    );
+   );
   }
 }
