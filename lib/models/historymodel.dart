@@ -5,6 +5,7 @@ class Historymodel {
   String title;
   String buydate;
   String quantity;
+  String genre;
 
   Historymodel({
     required this.email,
@@ -12,6 +13,7 @@ class Historymodel {
     required this.title,
     required this.buydate,
     required this.quantity,
+    required this.genre
 
   });
 
@@ -22,6 +24,7 @@ class Historymodel {
         title: json['title'], 
         buydate: json['buydate'], 
         quantity: json['quantity'],
+        genre: json['genre'],
         );
   }
 

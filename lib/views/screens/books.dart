@@ -11,8 +11,8 @@ import 'package:study_track/views/widgets/mysnackbar.dart';
 Bookcontroller bookcontroller = Get.put(Bookcontroller());
 final store=GetStorage();
 
-class Home extends StatelessWidget {
-  Home({super.key});
+class Book extends StatelessWidget {
+  Book({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,18 +45,6 @@ class Home extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.fromLTRB(25, 20, 12, 2),
-            child: Text(
-              'Hey, Welcome to your on stop bookstore!',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 15,
-                color: Colors.blue[800],
-                letterSpacing: 0.3,
-              ),
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),

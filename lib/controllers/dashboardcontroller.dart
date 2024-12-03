@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:study_track/views/screens/history.dart';
-import 'package:study_track/views/screens/home.dart';
+import 'package:study_track/views/screens/books.dart';
+import 'package:study_track/views/screens/homescreen.dart';
 import 'package:study_track/views/screens/profile.dart';
 import 'package:study_track/views/screens/settings.dart';
 
@@ -12,6 +13,7 @@ class Dashboardcontroller extends GetxController {
  
   final List<Widget> myScreens = [
     Home(),
+    Book(),
     History(),
     SettingsScreen(),
     Profile(),
@@ -21,10 +23,15 @@ class Dashboardcontroller extends GetxController {
 
 
   final List<BottomNavigationBarItem> myMenus = [
-    const BottomNavigationBarItem(
+      const BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
-    ),const BottomNavigationBarItem(
+    ),
+      const BottomNavigationBarItem(
+      icon: Icon(Icons.book),
+      label: 'Books',
+    ),
+      const BottomNavigationBarItem(
       icon: Icon(Icons.history),
       label: 'History',
     ), const BottomNavigationBarItem(
