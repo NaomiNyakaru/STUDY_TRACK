@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:study_track/views/screens/calender.dart';
+import 'package:study_track/views/screens/history.dart';
 import 'package:study_track/views/screens/home.dart';
 import 'package:study_track/views/screens/profile.dart';
 import 'package:study_track/views/screens/settings.dart';
@@ -12,9 +12,11 @@ class Dashboardcontroller extends GetxController {
  
   final List<Widget> myScreens = [
     Home(),
-    Profile(),
+    History(),
     SettingsScreen(),
-    CalenderScreen()
+    Profile(),
+    
+    
   ];
 
 
@@ -22,19 +24,19 @@ class Dashboardcontroller extends GetxController {
     const BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'Profile',
-    ),
-    const BottomNavigationBarItem(
+    ),const BottomNavigationBarItem(
+      icon: Icon(Icons.history),
+      label: 'History',
+    ), const BottomNavigationBarItem(
       icon: Icon(Icons.settings),
       label: 'Settings',
     ),
-     const BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: 'Calender',
+      const BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: 'Profile',
     ),
+   
+     
   ];
 
   

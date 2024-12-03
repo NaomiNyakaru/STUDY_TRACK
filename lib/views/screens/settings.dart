@@ -6,7 +6,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RxBool isDarkMode = false.obs;
+     
     final RxBool isNotificationsEnabled = true.obs;
     final RxString selectedLanguage = 'English'.obs;
 
@@ -24,23 +24,8 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Dark Mode Toggle
-            _buildToggleRow(
-              'Dark Mode',
-              Obx(() {
-                return Switch(
-                  value: isDarkMode.value,
-                  onChanged: (value) {
-                    isDarkMode.value = value;
-                    Get.changeThemeMode(
-                      isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-                    );
-                  },
-                );
-              }),
-            ),
-            const Divider(),
-            // Notifications Toggle
+            
+            
             _buildToggleRow(
               'Enable Notifications',
               Obx(() {
@@ -53,7 +38,7 @@ class SettingsScreen extends StatelessWidget {
               }),
             ),
             const Divider(),
-            // Language Selector
+           
             const Text(
               'Language',
               style: TextStyle(
@@ -76,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
             const Divider(),
-            // Account Management Section
+            
             const Text(
               'Account',
               style: TextStyle(
@@ -87,44 +72,45 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Update Account Info'),
+
               onTap: () {
-                // Handle navigation to account update screen
+                Get.toNamed("/profile");
               },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Log Out'),
               onTap: () {
-                // Handle log out logic
+                Get.toNamed('/');
               },
             ),
             const Divider(),
-            // Privacy and Security Section
+            
             ListTile(
               leading: const Icon(Icons.lock),
               title: const Text('Privacy Policy'),
               onTap: () {
-                // Handle navigation to privacy policy screen
+             
               },
             ),
             ListTile(
               leading: const Icon(Icons.security),
               title: const Text('Security Settings'),
               onTap: () {
-                // Handle navigation to security settings screen
+                
               },
             ),
             const Divider(),
-            // Reset Settings
+           
             ListTile(
               leading: const Icon(Icons.restore),
               title: const Text('Reset to Default Settings'),
               onTap: () {
-                // Handle reset logic
+              
               },
             ),
             const Divider(),
-            // About Section
+           
             const Text(
               'About',
               style: TextStyle(

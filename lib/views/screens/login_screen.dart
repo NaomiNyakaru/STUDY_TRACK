@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:study_track/controllers/logincontroller.dart';
-import 'package:study_track/views/screens/register_screen.dart';
 import 'package:study_track/views/widgets/mysnackbar.dart';
 import 'package:study_track/views/widgets/mytextfield.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+final store=GetStorage();
+
 
 class Login extends StatelessWidget {
-  TextEditingController nameInput = TextEditingController();
-  TextEditingController passwordInput = TextEditingController();
+  Login({super.key});
+  final TextEditingController emailInput = TextEditingController();
+  final TextEditingController passwordInput = TextEditingController();
   
-  Logincontroller logincontroller = Get.put(Logincontroller());
+  final Logincontroller logincontroller = Get.put(Logincontroller());
+
+  
   
   @override
   Widget build(BuildContext context) {
@@ -54,9 +62,9 @@ class Login extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         myTextField(
-                          controller: nameInput,
+                          controller: emailInput,
                           icon: Icons.person,
-                          hint: "Enter your name"
+                          hint: "Enter your email"
                         ),
                         const SizedBox(height: 20),
                         myTextField(
@@ -85,11 +93,12 @@ class Login extends StatelessWidget {
                           height: 45,
                           child: ElevatedButton(
                             onPressed: () {
-                              if (nameInput.text.isEmpty) {
+                              
+                              if (emailInput.text.isEmpty) {
 
                                 mysnackbar(
                                   title: "Error",
-                                  message: "Name must be provided",
+                                  message: "Email must be provided",
                                   type: "error",
                                 );
                                 return;
@@ -104,7 +113,7 @@ class Login extends StatelessWidget {
                                 return;
                               }
 
-                              if (passwordInput.text.length < 6) {  // Example minimum length
+                              if (passwordInput.text.length < 6) { 
                                 mysnackbar(
                                   title: "Error",
                                   message: "Password must be at least 6 characters",
@@ -113,9 +122,9 @@ class Login extends StatelessWidget {
                                 return;
                               }
 
-                              logincontroller.username.value = nameInput.text;
+                              logincontroller.email.value = emailInput.text;
                               logincontroller.password.value = passwordInput.text;
-                              Get.toNamed('/dashboard');
+                              remotelogin(emailInput.text, passwordInput.text);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
@@ -125,7 +134,7 @@ class Login extends StatelessWidget {
                             ),
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Icon(Icons.login, color: Colors.blue),
                                 SizedBox(width: 8),
                                 Text(
@@ -141,7 +150,7 @@ class Login extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 15),
-                        // Or divider
+                       
                         Row(
                           children: [
                             Expanded(
@@ -203,7 +212,7 @@ class Login extends StatelessWidget {
                         const SizedBox(height: 15),
                         TextButton(
                           onPressed: () {
-                            logincontroller.username.value = nameInput.text;
+                            logincontroller.email.value = emailInput.text;
                             logincontroller.password.value = passwordInput.text;
                             Get.toNamed('/register');
                           },
@@ -222,4 +231,43 @@ class Login extends StatelessWidget {
       ),
    );
   }
+  Future<void>remotelogin(String email, String password)async{
+  http.Response response;
+  response = await http.get(Uri.parse("http://192.168.39.125/study_track/login.php?email=$email&password=$password"));
+  if(response.statusCode==200){
+    var serverResponse = json.decode(response.body);
+    int loginStatus = serverResponse['code'];
+    if(loginStatus == 1){
+      int userid = int.parse(serverResponse['userdetails'][0]['id']);
+      String fname = serverResponse['userdetails'][0]['firstname'];
+      String sname = serverResponse['userdetails'][0]['lastname'];
+      String email = serverResponse['userdetails'][0]['email'];
+      String phone = serverResponse['userdetails'][0]['phone'];
+     
+      
+      store.write('userid',userid);
+      store.write('firstname', fname);
+      store.write('lastname',sname);
+      store.write('email', email);
+      store.write('phone', phone);
+
+      
+      Get.toNamed('/dashboard');
+      
+    } else {
+      mysnackbar(
+        title: "Login Failed",
+        message: serverResponse['message'] ?? "Invalid email or password",
+        type: "error",
+      );
+    }
+  } else {
+    mysnackbar(
+      title: "Error",
+      message: "Server error occurred",
+      type: "error",
+    );
+  }
+}
+
 }

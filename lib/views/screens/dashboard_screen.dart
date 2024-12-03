@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:study_track/configs/colors.dart';
 import 'package:study_track/controllers/dashboardcontroller.dart';
 
 class DashboardScreen extends StatelessWidget {

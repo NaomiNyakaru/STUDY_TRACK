@@ -5,5 +5,6 @@ class Registercontroller extends GetxController{
   var sname = ''.obs;
   var phonenumber = ''.obs;
   var email = ''.obs;
+  var password = ''.obs;
 
 }
